@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permainan Kinestetik - Taman Kanak-Kanak</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-color: #ffecb3;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #ff6347;
+        }
+
+        #instruction {
+            font-size: 20px;
+            color: #32cd32;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            background-color: #ff6347;
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 18px;
+        }
+
+        .action-button:hover {
+            background-color: #e55347;
+        }
+
+        #reset-button {
+            background-color: #32cd32;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+
+        #reset-button:hover {
+            background-color: #28a745;
+        }
+
+        /* Animasi Zoom In / Zoom Out */
+        .zoom {
+            font-size: 25px;
+            color: #ff6347;
+            animation: zoomInOut 3s ease-in-out infinite;
+        }
+
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Selamat! Kamu Sukses Menyelesaikan Permainan!</h1>
+    <p>Sekarang waktunya untuk meningkatkan kemampuan kinestetikmu!</p>
+
+    <p id="instruction">Tunggu sebentar... akan ada perintah gerakan yang harus kamu ikuti.</p>
+
+    <div id="motion-text" class="zoom"></div>
+
+    <button id="start-button" class="action-button" onclick="startKinestheticGame()">Mulai Permainan Kinestetik</button>
+
+    <p id="message"></p>
+
+    <button id="reset-button" onclick="startKinestheticGame()">Mulai Lagi</button>
+
+    <script>
+        let motions = [
+            "Tepuk tangan 3 kali!", 
+            "Lompat 5 kali!", 
+            "Putar badan 360 derajat!", 
+            "Sentuh jari kaki kiri!", 
+            "Angkat tangan kanan ke atas!"
+        ];
+        let currentMotionIndex = 0;
+
+        function startKinestheticGame() {
+            let message = document.getElementById('message');
+            let instruction = document.getElementById('instruction');
+            let motionText = document.getElementById('motion-text');
+
+            // Reset message and instructions
+            message.textContent = '';
+            instruction.textContent = 'Tunggu sebentar... akan ada perintah gerakan yang harus kamu ikuti.';
+
+            // Hide start button and show reset button
+            document.getElementById('start-button').style.display = 'none';
+            document.getElementById('reset-button').style.display = 'block';
+
+            // Start motion
+            currentMotionIndex = 0;
+            showNextMotion();
+        }
+
+        function showNextMotion() {
+            if (currentMotionIndex < motions.length) {
+                let motion = motions[currentMotionIndex];
+                let motionText = document.getElementById('motion-text');
+                motionText.textContent = motion;
+                
+                setTimeout(() => {
+                    currentMotionIndex++;
+                    showNextMotion();
+                }, 5000);  // Wait for 5 seconds before showing next motion
+            } else {
+                // End of game
+                let message = document.getElementById('message');
+                message.textContent = "Permainan selesai! Hebat sekali, kamu sudah menyelesaikan semua gerakan!";
+                message.style.color = "#32cd32";  // Green color
+                document.getElementById('instruction').textContent = "Kamu sangat hebat! Yuk, coba lagi!";
+            }
+        }
+    </script>
+
+</body>
+</html>
